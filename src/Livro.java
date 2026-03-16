@@ -10,4 +10,5 @@ public class Livro {
     String versao;
     double preco;
     String resumo;
+
 }
