@@ -1,0 +1,76 @@
+package br.com.etechoracio.playlivros.model;
+
+import br.com.etechoracio.playlivros.enums.DisponibilidadeEnum;
+import br.com.etechoracio.playlivros.enums.VersaoEnum;
+import br.com.etechoracio.playlivros.interfaces.Publicacao;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+public abstract class Livro implements Publicacao {
+    //tipo nomeVariavel;
+    private String titulo;
+    private String autor;
+    private String editora;
+    protected double preco;
+    private String resumo;
+    private LocalDate dataLancamento;
+
+    public void exibir(){
+        System.out.println("-----------------------------------");
+        System.out.println("Título: " + titulo);
+        System.out.println("Autor: " + autor);
+        System.out.println("Editora: " + editora);
+        System.out.println("Preço: " + preco);
+        System.out.println(obterDisponibilidade());
+        exibirDetalhes();
+    }
+
+    protected abstract void exibirDetalhes();
+
+    public DisponibilidadeEnum obterDisponibilidade(){
+        LocalDate dataAtual = LocalDate.now();
+        if(dataLancamento == null){
+            return DisponibilidadeEnum.INDISPONIVEL;
+        }else if(dataLancamento.isAfter(dataAtual)){
+            return DisponibilidadeEnum.EM_PRE_VENDA;
+        }else if(dataLancamento.isAfter(dataAtual.minusDays(30))){
+            return DisponibilidadeEnum.LANCAMENTO_RECENTE;
+        }else{
+            return DisponibilidadeEnum.DISPONIVEL;
+        }
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public void setEditora(String editora) {
+        this.editora = editora;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    public void setResumo(String resumo) {
+        this.resumo = resumo;
+    }
+
+    public void setDataLancamento(LocalDate dataLancamento) {
+        this.dataLancamento = dataLancamento;
+    }
+
+    public double getTotal() {
+        return preco;
+    }
+
+}
